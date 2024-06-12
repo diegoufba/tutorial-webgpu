@@ -1,12 +1,12 @@
-// @vertex
-// fn vertexMain(@location(0) pos: vec2f) -> @builtin(position) vec4f {
-//     return vec4f(pos.x,pos.y,0.0, 1.0);
-// }
+@vertex
+fn vertexMain(@location(0) pos: vec2f) -> @builtin(position) vec4f {
+    return vec4f(pos.x,pos.y,0.0, 1.0);
+}
 
-// @fragment
-// fn fragmentMain() -> @location(0) vec4f {
-//     return vec4f(1,0,0,1);
-// }
+@fragment
+fn fragmentMain() -> @location(0) vec4f {
+    return vec4f(1,0,0,1);
+}
 
 // struct VertexInput {
 //     @location(0) pos: vec2f,
@@ -57,45 +57,45 @@
 //     return textureSample(myTexture, mySample, fragInput.uv);
 // }
 
-struct VertexInput {
-    @location(0) pos: vec2f,
-    @location(1) uv: vec2f
-}
+// struct VertexInput {
+//     @location(0) pos: vec2f,
+//     @location(1) uv: vec2f
+// }
 
-struct VertexOutput {
-    @builtin(position) pos: vec4f,
-    @location(0) uv: vec2f
-}
+// struct VertexOutput {
+//     @builtin(position) pos: vec4f,
+//     @location(0) uv: vec2f
+// }
 
-struct Parametros {
-    tamanho: f32,
-    tempo: f32,
-    // projection: mat4x4f
-}
+// struct Parametros {
+//     tamanho: f32,
+//     tempo: f32,
+//     // projection: mat4x4f
+// }
 
-@group(0) @binding(0) var myTexture: texture_2d<f32>;
-@group(0) @binding(1) var mySample: sampler;
-@group(0) @binding(2) var<uniform> parametros: Parametros;
+// @group(0) @binding(0) var myTexture: texture_2d<f32>;
+// @group(0) @binding(1) var mySample: sampler;
+// @group(0) @binding(2) var<uniform> parametros: Parametros;
 
-@vertex
-fn vertexMain(vertexInput: VertexInput) -> VertexOutput {
-    var vertexOutput: VertexOutput;
-    let translacao = sin(parametros.tempo);
+// @vertex
+// fn vertexMain(vertexInput: VertexInput) -> VertexOutput {
+//     var vertexOutput: VertexOutput;
+//     let translacao = sin(parametros.tempo);
 
-    let x = vertexInput.pos.x * parametros.tamanho;
-    let y = vertexInput.pos.y * parametros.tamanho + sin(parametros.tempo + x * 10) / 12;
-    // let translacao2 = cos(parametros.tempo);
-    // let tamanho = abs(sin(parametros.tempo)) * parametros.tamanho;
-    // let x = vertexInput.pos.x * parametros.tamanho * abs(sin(parametros.tempo));
-    vertexOutput.pos = vec4f(x, y, 0.0, 1.0);
-    vertexOutput.uv = vertexInput.uv;
-    return vertexOutput;
-}
+//     let x = vertexInput.pos.x * parametros.tamanho;
+//     let y = vertexInput.pos.y * parametros.tamanho + sin(parametros.tempo + x * 10) / 12;
+//     // let translacao2 = cos(parametros.tempo);
+//     // let tamanho = abs(sin(parametros.tempo)) * parametros.tamanho;
+//     // let x = vertexInput.pos.x * parametros.tamanho * abs(sin(parametros.tempo));
+//     vertexOutput.pos = vec4f(x, y, 0.0, 1.0);
+//     vertexOutput.uv = vertexInput.uv;
+//     return vertexOutput;
+// }
 
-@fragment
-fn fragmentMain(fragInput: VertexOutput) -> @location(0) vec4f {
-    return textureSample(myTexture, mySample, fragInput.uv);
-}
+// @fragment
+// fn fragmentMain(fragInput: VertexOutput) -> @location(0) vec4f {
+//     return textureSample(myTexture, mySample, fragInput.uv);
+// }
 
 
 // struct VertexOutput {

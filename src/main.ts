@@ -1,6 +1,5 @@
 import renderShader from './renderShader.wgsl?raw'
-import computeShader from './computeShader.wgsl?raw'
-import { triangle, quadrado, quadradoCores, quadradoTextura, getQuadradosTextura } from './mesh';
+import { triangulo, quadrado, quadradoCores, quadradoTextura, getQuadradosTextura } from './mesh';
 
 async function main() {
   //Configuração básica do Webgpu ******************************************************
@@ -40,9 +39,10 @@ async function main() {
   //************************************************************************************
 
   //Configuração dos Pontos de Entrada *************************************************
-  const n = 5
+  // const n = 5
 
-  const vertices = getQuadradosTextura(n)
+  // const vertices = getQuadradosTextura(n)
+  const vertices = triangulo
 
   const nPontos = vertices.length
 
@@ -56,14 +56,14 @@ async function main() {
 
   device.queue.writeBuffer(verticesBuffer, 0, verticesArray)
 
-  // const verticesBufferLayout: GPUVertexBufferLayout = {
-  //   arrayStride: 8,
-  //   attributes: [{
-  //     format: 'float32x2',
-  //     offset: 0,
-  //     shaderLocation: 0
-  //   }]
-  // }
+  const verticesBufferLayout: GPUVertexBufferLayout = {
+    arrayStride: 8,
+    attributes: [{
+      format: 'float32x2',
+      offset: 0,
+      shaderLocation: 0
+    }]
+  }
   // const verticesBufferLayout: GPUVertexBufferLayout = {
   //   arrayStride: 20,
   //   attributes: [
@@ -80,103 +80,103 @@ async function main() {
   //   ]
   // }
 
-  const verticesBufferLayout: GPUVertexBufferLayout = {
-    arrayStride: 16,
-    attributes: [
-      {
-        format: 'float32x2',
-        offset: 0,
-        shaderLocation: 0
-      },
-      {
-        format: 'float32x2',
-        offset: 8,
-        shaderLocation: 1
-      },
-    ]
-  }
+  // const verticesBufferLayout: GPUVertexBufferLayout = {
+  //   arrayStride: 16,
+  //   attributes: [
+  //     {
+  //       format: 'float32x2',
+  //       offset: 0,
+  //       shaderLocation: 0
+  //     },
+  //     {
+  //       format: 'float32x2',
+  //       offset: 8,
+  //       shaderLocation: 1
+  //     },
+  //   ]
+  // }
   //************************************************************************************
 
   //Configuração dos Uniformes *********************************************************
-  let tamanho = 1 / 4
-  let tempo = 0
+  // let tamanho = 1 / 4
+  // let tempo = 0
 
-  const parametrosBufferArray = new Float32Array([tamanho, tempo])
+  // const parametrosBufferArray = new Float32Array([tamanho, tempo])
 
-  const parametrosBuffer: GPUBuffer = device.createBuffer({
-    label: 'Uniform buffer',
-    size: parametrosBufferArray.byteLength,
-    usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
-  })
-  device.queue.writeBuffer(parametrosBuffer, 0, parametrosBufferArray)
+  // const parametrosBuffer: GPUBuffer = device.createBuffer({
+  //   label: 'Uniform buffer',
+  //   size: parametrosBufferArray.byteLength,
+  //   usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
+  // })
+  // device.queue.writeBuffer(parametrosBuffer, 0, parametrosBufferArray)
   //************************************************************************************
 
   //Configuração da Textura ************************************************************
-  const res = await fetch('/textura.png')
-  const blob = await res.blob()
-  const source = await createImageBitmap(blob, { colorSpaceConversion: 'none' })
+  // const res = await fetch('/textura.png')
+  // const blob = await res.blob()
+  // const source = await createImageBitmap(blob, { colorSpaceConversion: 'none' })
 
-  const texture: GPUTexture = device.createTexture({
-    label: 'Textura',
-    format: 'rgba8unorm',
-    size: [source.width, source.height],
-    usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT,
-  })
+  // const texture: GPUTexture = device.createTexture({
+  //   label: 'Textura',
+  //   format: 'rgba8unorm',
+  //   size: [source.width, source.height],
+  //   usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT,
+  // })
 
-  device.queue.copyExternalImageToTexture(
-    { source },
-    { texture },
-    { width: source.width, height: source.height }
-  )
+  // device.queue.copyExternalImageToTexture(
+  //   { source },
+  //   { texture },
+  //   { width: source.width, height: source.height }
+  // )
 
-  const sampler: GPUSampler = device.createSampler();
+  // const sampler: GPUSampler = device.createSampler();
   //************************************************************************************
 
   //Configuração do Render *************************************************************
-  const bindGroupLayoutRender: GPUBindGroupLayout = device.createBindGroupLayout({
-    label: 'Bind Group Layout Render',
-    entries: [
-      {
-        binding: 0,
-        visibility: GPUShaderStage.FRAGMENT,
-        texture: {}
-      },
-      {
-        binding: 1,
-        visibility: GPUShaderStage.FRAGMENT,
-        sampler: {}
-      },
-      {
-        binding: 2,
-        visibility: GPUShaderStage.VERTEX,
-        buffer: { type: 'uniform' }
-      },
-    ]
-  })
+  // const bindGroupLayoutRender: GPUBindGroupLayout = device.createBindGroupLayout({
+  //   label: 'Bind Group Layout Render',
+  //   entries: [
+  //     {
+  //       binding: 0,
+  //       visibility: GPUShaderStage.FRAGMENT,
+  //       texture: {}
+  //     },
+  //     {
+  //       binding: 1,
+  //       visibility: GPUShaderStage.FRAGMENT,
+  //       sampler: {}
+  //     },
+  //     // {
+  //     //   binding: 2,
+  //     //   visibility: GPUShaderStage.VERTEX,
+  //     //   buffer: { type: 'uniform' }
+  //     // },
+  //   ]
+  // })
 
-  const bindGroupRender = device.createBindGroup({
-    label: 'Bind Group',
-    layout: bindGroupLayoutRender,
-    entries: [
-      {
-        binding: 0,
-        resource: texture.createView()
-      },
-      {
-        binding: 1,
-        resource: sampler
-      },
-      {
-        binding: 2,
-        resource: { buffer: parametrosBuffer }
-      },
-    ]
-  })
+  // const bindGroupRender = device.createBindGroup({
+  //   label: 'Bind Group',
+  //   layout: bindGroupLayoutRender,
+  //   entries: [
+  //     {
+  //       binding: 0,
+  //       resource: texture.createView()
+  //     },
+  //     {
+  //       binding: 1,
+  //       resource: sampler
+  //     },
+  //     // {
+  //     //   binding: 2,
+  //     //   resource: { buffer: parametrosBuffer }
+  //     // },
+  //   ]
+  // })
 
-  const pipelineLayoutRender = device.createPipelineLayout({
-    label: 'Pipeline Layout Render',
-    bindGroupLayouts: [bindGroupLayoutRender],
-  })
+  // const pipelineLayoutRender = device.createPipelineLayout({
+  //   label: 'Pipeline Layout Render',
+  //   bindGroupLayouts: [bindGroupLayoutRender],
+  // })
 
   const renderShaderModule: GPUShaderModule = device.createShaderModule({
     label: 'Render shader',
@@ -185,7 +185,8 @@ async function main() {
 
   const renderPipeline: GPURenderPipeline = device.createRenderPipeline({
     label: 'Render Pipeline',
-    layout: pipelineLayoutRender,
+    layout: 'auto',
+    // layout: pipelineLayoutRender,
     vertex: {
       module: renderShaderModule,
       entryPoint: "vertexMain",
@@ -206,13 +207,13 @@ async function main() {
   //************************************************************************************
 
 
-  const tempoInicial = Date.now()
-  const velocidade = 1 / 1000
+  // const tempoInicial = Date.now()
+  // const velocidade = 1 / 1000
   function render() {
 
-    tempo = (Date.now() - tempoInicial) * velocidade
-    parametrosBufferArray[1] = tempo
-    device.queue.writeBuffer(parametrosBuffer, 0, parametrosBufferArray)
+    // tempo = (Date.now() - tempoInicial) * velocidade
+    // parametrosBufferArray[1] = tempo
+    // device.queue.writeBuffer(parametrosBuffer, 0, parametrosBufferArray)
 
     const encoder: GPUCommandEncoder = device.createCommandEncoder()
     const textureView: GPUTextureView = context!.getCurrentTexture().createView()
@@ -226,7 +227,7 @@ async function main() {
     }
     const renderPass: GPURenderPassEncoder = encoder.beginRenderPass(renderPassDescriptor)
     renderPass.setPipeline(renderPipeline)
-    renderPass.setBindGroup(0, bindGroupRender)
+    // renderPass.setBindGroup(0, bindGroupRender)
     renderPass.setVertexBuffer(0, verticesBuffer)
     renderPass.draw(nPontos)
     renderPass.end()

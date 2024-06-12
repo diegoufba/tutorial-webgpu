@@ -1,4 +1,4 @@
-export const triangle = [
+export const triangulo = [
     [-0.8, -0.8], // p0
     [0.8, -0.8], // p1
     [0.8, 0.8], // p2
