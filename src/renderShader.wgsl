@@ -70,7 +70,6 @@ fn fragmentMain() -> @location(0) vec4f {
 // struct Parametros {
 //     tamanho: f32,
 //     tempo: f32,
-//     // projection: mat4x4f
 // }
 
 // @group(0) @binding(0) var myTexture: texture_2d<f32>;
@@ -80,13 +79,16 @@ fn fragmentMain() -> @location(0) vec4f {
 // @vertex
 // fn vertexMain(vertexInput: VertexInput) -> VertexOutput {
 //     var vertexOutput: VertexOutput;
-//     let translacao = sin(parametros.tempo);
 
-//     let x = vertexInput.pos.x * parametros.tamanho;
-//     let y = vertexInput.pos.y * parametros.tamanho + sin(parametros.tempo + x * 10) / 12;
+//     var x = vertexInput.pos.x * parametros.tamanho;
+//     var y = vertexInput.pos.y * parametros.tamanho;
+
+//     // let translacao = sin(parametros.tempo);
 //     // let translacao2 = cos(parametros.tempo);
-//     // let tamanho = abs(sin(parametros.tempo)) * parametros.tamanho;
-//     // let x = vertexInput.pos.x * parametros.tamanho * abs(sin(parametros.tempo));
+//     // x = x + translacao;
+//     // y = y + translacao2;
+//     y = y + sin(parametros.tempo + x * 10) / 12;
+
 //     vertexOutput.pos = vec4f(x, y, 0.0, 1.0);
 //     vertexOutput.uv = vertexInput.uv;
 //     return vertexOutput;
@@ -119,14 +121,11 @@ fn fragmentMain() -> @location(0) vec4f {
 
 //     let translacao = sin(parametros.tempo);
 
-//     let x = ponto[0] * parametros.tamanho;
-//     let y = ponto[1] * parametros.tamanho + sin(parametros.tempo + x * 10) / 12;
-//     // let translacao2 = cos(parametros.tempo);
-//     // let tamanho = abs(sin(parametros.tempo)) * parametros.tamanho;
-//     // let x = vertexInput.pos.x * parametros.tamanho * abs(sin(parametros.tempo));
+//     var x = ponto[0] * parametros.tamanho;
+//     var y = ponto[1] * parametros.tamanho;
+//     y = y +sin(parametros.tempo + x * 10) / 12;
 
 //     let position = vec4f(x, y, 0.0, 1.0);
-
 
 //     var output: VertexOutput;
 //     output.pos = position;

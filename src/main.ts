@@ -39,7 +39,10 @@ async function main() {
   //************************************************************************************
 
   //Configuração dos Pontos de Entrada *************************************************
-  // const n = 5
+  let topology: GPUPrimitiveTopology = 'triangle-list'
+  // let topology: GPUPrimitiveTopology = 'point-list'
+
+  // const n = 1
 
   // const vertices = getQuadradosTextura(n)
   const vertices = triangulo
@@ -146,11 +149,11 @@ async function main() {
   //       visibility: GPUShaderStage.FRAGMENT,
   //       sampler: {}
   //     },
-  //     // {
-  //     //   binding: 2,
-  //     //   visibility: GPUShaderStage.VERTEX,
-  //     //   buffer: { type: 'uniform' }
-  //     // },
+  //     {
+  //       binding: 2,
+  //       visibility: GPUShaderStage.VERTEX,
+  //       buffer: { type: 'uniform' }
+  //     },
   //   ]
   // })
 
@@ -166,10 +169,10 @@ async function main() {
   //       binding: 1,
   //       resource: sampler
   //     },
-  //     // {
-  //     //   binding: 2,
-  //     //   resource: { buffer: parametrosBuffer }
-  //     // },
+  //     {
+  //       binding: 2,
+  //       resource: { buffer: parametrosBuffer }
+  //     },
   //   ]
   // })
 
@@ -200,8 +203,7 @@ async function main() {
       }]
     },
     primitive: {
-      topology: 'triangle-list'
-      // topology: 'point-list'
+      topology: topology
     }
   })
   //************************************************************************************
@@ -233,7 +235,7 @@ async function main() {
     renderPass.end()
     device.queue.submit([encoder.finish()])
 
-    window.requestAnimationFrame(render)
+    // window.requestAnimationFrame(render)
   }
 
   render()

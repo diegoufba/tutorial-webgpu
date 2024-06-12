@@ -40,7 +40,7 @@ async function main() {
   //************************************************************************************
 
   //Configuração do Compute Shader *****************************************************
-  const n = 2
+  const n = 1000
 
   let nPontos = n * n * 6
   let pointsBuffer: GPUBuffer = device.createBuffer({
